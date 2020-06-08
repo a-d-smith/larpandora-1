@@ -1,0 +1,29 @@
+#include "services_microboone.fcl"
+
+process_name : DoubleCountSanityCheck
+
+source : {
+    module_type : RootInput
+    maxEvents   : -1
+}
+
+services :
+{
+    TFileService: { fileName: "dummy.root" }
+}
+
+outputs: {}
+
+physics: {
+    analyzers: {
+        myana: {
+            module_type:    DoubleCountSanityCheck
+            PandoraLabel:   "pandora"
+            HitLabel:       "gaushit"
+        }
+    }
+
+    path0 : [  myana ]
+    end_paths: [ path0 ]
+
+}
