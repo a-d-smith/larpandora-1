@@ -513,19 +513,27 @@ void LArPandoraInput::CreatePandoraMCParticles(const Settings &settings, const M
         // Find the source of the mc particle
         int nuanceCode(0);
         const int trackID(particle->TrackId());
-        const simb::Origin_t origin(particleInventoryService->TrackIdToMCTruth(trackID).Origin());
 
-        if (LArPandoraInput::IsPrimaryMCParticle(particle, primaryGeneratorMCParticleMap))
+        try
         {
-            nuanceCode = 2001;
+            const simb::Origin_t origin(particleInventoryService->TrackIdToMCTruth(trackID).Origin());
+
+            if (LArPandoraInput::IsPrimaryMCParticle(particle, primaryGeneratorMCParticleMap))
+            {
+                nuanceCode = 2001;
+            }
+            else if (simb::kCosmicRay == origin)
+            {
+                nuanceCode = 3000;
+            }
+            else if (simb::kSingleParticle == origin)
+            {
+                nuanceCode = 2000;
+            }
         }
-        else if (simb::kCosmicRay == origin)
+        catch (const cet::exception &)
         {
-            nuanceCode = 3000;
-        }
-        else if (simb::kSingleParticle == origin)
-        {
-            nuanceCode = 2000;
+            // ATTN sometimes we can't get the MCTruth from a trackID, in these cases we just default to the "nuanceCode" of 0
         }
 
         // Create 3D Pandora MC Particle
