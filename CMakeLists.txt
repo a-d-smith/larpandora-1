@@ -52,8 +52,8 @@ find_ups_product( larreco v1_00_00 )
 find_ups_product( nutools v0_00_00 )
 find_ups_product( art v1_09_00 )
 find_ups_product( pandora v02_00_00 )
-find_ups_product( larpandoracontent v02_04_00 )
-find_ups_product( cetbuildtools v4_09_00 )
+find_ups_product( larpandoracontent v03_14_04_01 )
+find_ups_product( cetbuildtools v7_06_04 )
 find_ups_product( postgresql v9_1_5 )
 
 # macros for dictionary and simple_plugin
